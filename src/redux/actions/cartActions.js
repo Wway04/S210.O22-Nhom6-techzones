@@ -4,14 +4,8 @@ export const DELETE_FROM_CART = "DELETE_FROM_CART";
 export const DELETE_ALL_FROM_CART = "DELETE_ALL_FROM_CART";
 
 //add to cart
-export const addToCart = (
-  item,
-  addToast,
-  quantityCount,
-  selectedProductColor,
-  selectedProductSize
-) => {
-  return dispatch => {
+export const addToCart = (item, addToast, quantityCount, selectedProductColor, selectedProductSize) => {
+  return (dispatch) => {
     if (addToast) {
       addToast("Added To Cart", { appearance: "success", autoDismiss: true });
     }
@@ -20,27 +14,17 @@ export const addToCart = (
       payload: {
         ...item,
         quantity: quantityCount,
-        selectedProductColor: selectedProductColor
-          ? selectedProductColor
-          : item.selectedProductColor
-          ? item.selectedProductColor
-          : null,
-        selectedProductSize: selectedProductSize
-          ? selectedProductSize
-          : item.selectedProductSize
-          ? item.selectedProductSize
-          : null
-      }
+      },
     });
   };
 };
 //decrease from cart
 export const decreaseQuantity = (item, addToast) => {
-  return dispatch => {
+  return (dispatch) => {
     if (addToast) {
       addToast("Item Decremented From Cart", {
         appearance: "warning",
-        autoDismiss: true
+        autoDismiss: true,
       });
     }
     dispatch({ type: DECREASE_QUANTITY, payload: item });
@@ -48,7 +32,7 @@ export const decreaseQuantity = (item, addToast) => {
 };
 //delete from cart
 export const deleteFromCart = (item, addToast) => {
-  return dispatch => {
+  return (dispatch) => {
     if (addToast) {
       addToast("Removed From Cart", { appearance: "error", autoDismiss: true });
     }
@@ -56,12 +40,12 @@ export const deleteFromCart = (item, addToast) => {
   };
 };
 //delete all from cart
-export const deleteAllFromCart = addToast => {
-  return dispatch => {
+export const deleteAllFromCart = (addToast) => {
+  return (dispatch) => {
     if (addToast) {
       addToast("Removed All From Cart", {
         appearance: "error",
-        autoDismiss: true
+        autoDismiss: true,
       });
     }
     dispatch({ type: DELETE_ALL_FROM_CART });
@@ -73,8 +57,6 @@ export const cartItemStock = (item, color, size) => {
   if (item.stock) {
     return item.stock;
   } else {
-    return item.variation
-      .filter(single => single.color === color)[0]
-      .size.filter(single => single.name === size)[0].stock;
+    return item.stock;
   }
 };

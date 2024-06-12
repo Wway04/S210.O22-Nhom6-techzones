@@ -1,30 +1,121 @@
 import PropTypes from "prop-types";
-import React, { Fragment } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import MetaTags from "react-meta-tags";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { getDiscountPrice } from "../../helpers/product";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
+import { UserContext } from "../../App";
+import { deleteAllFromCart } from "../../redux/actions/cartActions";
+import { useHistory } from "react-router-dom";
+
+const URL = "http://localhost:3001/api/v1";
 
 const Checkout = ({ location, cartItems, currency }) => {
   const { pathname } = location;
-  let cartTotalPrice = 0;
+  const dispatch = useDispatch();
+
+  const {
+    vouchers,
+    voucherName,
+    price,
+    voucherValue,
+    user,
+    totalPrice,
+    voucherId,
+    setPrice,
+    setTotalPrice,
+    setVoucherValue,
+  } = useContext(UserContext);
+
+  const [name, setName] = useState();
+  const [email, setEmail] = useState();
+  const [address, setAddress] = useState();
+  const [phone, setPhone] = useState();
+  const [message, setMessage] = useState();
+
+  useEffect(() => {
+    let totalPrice = 0;
+    cartItems.forEach((cartItem) => {
+      const discountedPrice = getDiscountPrice(cartItem.price, cartItem.discount);
+      const finalProductPrice = (cartItem.price * currency.currencyRate).toFixed(2);
+      const finalDiscountedPrice = (discountedPrice * currency.currencyRate).toFixed(2);
+      discountedPrice != null
+        ? (totalPrice += finalDiscountedPrice * cartItem.quantity)
+        : (totalPrice += finalProductPrice * cartItem.quantity);
+    });
+    setTotalPrice(totalPrice - (totalPrice * voucherValue) / 100);
+    setPrice(totalPrice);
+  }, [cartItems, currency]);
+
+  const history = useHistory(); // Initialize useHistory hook
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    async function createOrder(url = "", data = {}) {
+      // Default options are marked with *
+      const response = await fetch(url, {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        mode: "cors", // no-cors, *cors, same-origin
+        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: "same-origin", // include, *same-origin, omit
+        headers: {
+          "Content-Type": "application/json",
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: "follow", // manual, *follow, error
+        referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify(data), // body data type must match "Content-Type" header
+      });
+      const result = await response.json();
+      return result; // parses JSON response into native JavaScript objects
+    }
+    async function createOrderDetail(url = "", data = {}) {
+      // Default options are marked with *
+      const response = await fetch(url, {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        mode: "cors", // no-cors, *cors, same-origin
+        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: "same-origin", // include, *same-origin, omit
+        headers: {
+          "Content-Type": "application/json",
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: "follow", // manual, *follow, error
+        referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify(data), // body data type must match "Content-Type" header
+      });
+      const result = await response.json();
+      return result; // parses JSON response into native JavaScript objects
+    }
+
+    const { insertId } = await createOrder(`${URL}/orders`, {
+      customer_id: user?.id,
+      name,
+      email,
+      address,
+      phone,
+      message,
+      price: parseInt(totalPrice),
+      voucher_id: voucherId,
+    });
+    history.push("/check-out-complete");
+
+    await createOrderDetail(`${URL}/order-details`, { order_id: insertId, cartItems });
+    await dispatch(deleteAllFromCart());
+  };
 
   return (
     <Fragment>
       <MetaTags>
-        <title>Flone | Checkout</title>
-        <meta
-          name="description"
-          content="Checkout page of flone react minimalist eCommerce template."
-        />
+        <title>TechZones | Checkout</title>
+        <meta name="description" content="Checkout page of techzones react minimalist eCommerce template." />
       </MetaTags>
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
-        Checkout
-      </BreadcrumbsItem>
+      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Trang chủ</BreadcrumbsItem>
+      <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>Thanh toán</BreadcrumbsItem>
       <LayoutOne headerTop="visible">
         {/* breadcrumb */}
         <Breadcrumb />
@@ -34,145 +125,94 @@ const Checkout = ({ location, cartItems, currency }) => {
               <div className="row">
                 <div className="col-lg-7">
                   <div className="billing-info-wrap">
-                    <h3>Billing Details</h3>
+                    <h3>Thông tin đơn hàng</h3>
                     <div className="row">
-                      <div className="col-lg-6 col-md-6">
+                      <div className="col-lg-12 col-md-12">
                         <div className="billing-info mb-20">
-                          <label>First Name</label>
-                          <input type="text" />
-                        </div>
-                      </div>
-                      <div className="col-lg-6 col-md-6">
-                        <div className="billing-info mb-20">
-                          <label>Last Name</label>
-                          <input type="text" />
+                          <label>Tên</label>
+                          <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
                         </div>
                       </div>
                       <div className="col-lg-12">
                         <div className="billing-info mb-20">
-                          <label>Company Name</label>
-                          <input type="text" />
-                        </div>
-                      </div>
-                      <div className="col-lg-12">
-                        <div className="billing-select mb-20">
-                          <label>Country</label>
-                          <select>
-                            <option>Select a country</option>
-                            <option>Azerbaijan</option>
-                            <option>Bahamas</option>
-                            <option>Bahrain</option>
-                            <option>Bangladesh</option>
-                            <option>Barbados</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div className="col-lg-12">
-                        <div className="billing-info mb-20">
-                          <label>Street Address</label>
+                          <label>Địa chỉ</label>
                           <input
                             className="billing-address"
-                            placeholder="House number and street name"
+                            placeholder=""
                             type="text"
-                          />
-                          <input
-                            placeholder="Apartment, suite, unit etc."
-                            type="text"
+                            value={address}
+                            onChange={(e) => setAddress(e.target.value)}
                           />
                         </div>
                       </div>
-                      <div className="col-lg-12">
+                      <div className="col-lg-6 col-md-6">
                         <div className="billing-info mb-20">
-                          <label>Town / City</label>
-                          <input type="text" />
+                          <label>Số điện thoại</label>
+                          <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} />
                         </div>
                       </div>
                       <div className="col-lg-6 col-md-6">
                         <div className="billing-info mb-20">
-                          <label>State / County</label>
-                          <input type="text" />
-                        </div>
-                      </div>
-                      <div className="col-lg-6 col-md-6">
-                        <div className="billing-info mb-20">
-                          <label>Postcode / ZIP</label>
-                          <input type="text" />
-                        </div>
-                      </div>
-                      <div className="col-lg-6 col-md-6">
-                        <div className="billing-info mb-20">
-                          <label>Phone</label>
-                          <input type="text" />
-                        </div>
-                      </div>
-                      <div className="col-lg-6 col-md-6">
-                        <div className="billing-info mb-20">
-                          <label>Email Address</label>
-                          <input type="text" />
+                          <label>Email</label>
+                          <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
                         </div>
                       </div>
                     </div>
-
                     <div className="additional-info-wrap">
-                      <h4>Additional information</h4>
+                      <h4>Thông tin thêm</h4>
                       <div className="additional-info">
-                        <label>Order notes</label>
+                        <label>Ghi chú đơn hàng</label>
                         <textarea
-                          placeholder="Notes about your order, e.g. special notes for delivery. "
+                          placeholder="Ghi chú về đơn đặt hàng của bạn, ví dụ: ghi chú đặc biệt khi giao hàng."
                           name="message"
                           defaultValue={""}
+                          value={message}
+                          onChange={(e) => setMessage(e.target.value)}
                         />
                       </div>
                     </div>
                   </div>
                 </div>
-
                 <div className="col-lg-5">
                   <div className="your-order-area">
-                    <h3>Your order</h3>
+                    <h3>Đơn hàng của bạn</h3>
                     <div className="your-order-wrap gray-bg-4">
                       <div className="your-order-product-info">
                         <div className="your-order-top">
                           <ul>
-                            <li>Product</li>
-                            <li>Total</li>
+                            <li>Sản phẩm</li>
+                            <li>Tổng</li>
                           </ul>
                         </div>
                         <div className="your-order-middle">
                           <ul>
-                            {cartItems.map((cartItem, key) => {
-                              const discountedPrice = getDiscountPrice(
-                                cartItem.price,
-                                cartItem.discount
-                              );
-                              const finalProductPrice = (
-                                cartItem.price * currency.currencyRate
-                              ).toFixed(2);
-                              const finalDiscountedPrice = (
-                                discountedPrice * currency.currencyRate
-                              ).toFixed(2);
-
-                              discountedPrice != null
-                                ? (cartTotalPrice +=
-                                    finalDiscountedPrice * cartItem.quantity)
-                                : (cartTotalPrice +=
-                                    finalProductPrice * cartItem.quantity);
+                            {cartItems.map((cartItem) => {
+                              const discountedPrice = getDiscountPrice(cartItem.price, cartItem.discount);
+                              const finalProductPrice = (cartItem.price * currency.currencyRate).toFixed(2);
+                              const finalDiscountedPrice = (discountedPrice * currency.currencyRate).toFixed(2);
                               return (
-                                <li key={key}>
+                                <li key={cartItem.id}>
                                   <span className="order-middle-left">
                                     {cartItem.name} X {cartItem.quantity}
-                                  </span>{" "}
+                                  </span>
                                   <span className="order-price">
                                     {discountedPrice !== null
-                                      ? currency.currencySymbol +
-                                        (
-                                          finalDiscountedPrice *
-                                          cartItem.quantity
-                                        ).toFixed(2)
+                                      ? currency.currencyName === "VND"
+                                        ? (finalDiscountedPrice * cartItem.quantity)
+                                            .toFixed(0)
+                                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + currency.currencySymbol
+                                        : currency.currencySymbol +
+                                          (finalDiscountedPrice * cartItem.quantity)
+                                            .toFixed(2)
+                                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                                      : currency.currencyName === "VND"
+                                      ? (finalProductPrice * cartItem.quantity)
+                                          .toFixed(0)
+                                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + currency.currencySymbol
                                       : currency.currencySymbol +
-                                        (
-                                          finalProductPrice * cartItem.quantity
-                                        ).toFixed(2)}
+                                        (finalProductPrice * cartItem.quantity)
+                                          .toFixed(2)
+                                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                   </span>
                                 </li>
                               );
@@ -181,16 +221,32 @@ const Checkout = ({ location, cartItems, currency }) => {
                         </div>
                         <div className="your-order-bottom">
                           <ul>
-                            <li className="your-order-shipping">Shipping</li>
-                            <li>Free shipping</li>
+                            <li className="your-order-shipping">Giá vận chuyển</li>
+                            <li>Miễn phí vận chuyển</li>
                           </ul>
                         </div>
                         <div className="your-order-total">
+                          {voucherName && (
+                            <div className="your-order-bottom mb-4">
+                              <ul>
+                                <li className="your-order-shipping">{voucherName}</li>
+                                <span>
+                                  -{" "}
+                                  {currency?.currencyName === "VND"
+                                    ? ((price * voucherValue) / 100).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+                                      currency.currencySymbol
+                                    : currency.currencySymbol +
+                                      ((price * voucherValue) / 100).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                </span>
+                              </ul>
+                            </div>
+                          )}
                           <ul>
-                            <li className="order-total">Total</li>
+                            <li className="order-total">Tổng</li>
                             <li>
-                              {currency.currencySymbol +
-                                cartTotalPrice.toFixed(2)}
+                              {currency.currencyName === "VND"
+                                ? totalPrice.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + currency.currencySymbol
+                                : currency.currencySymbol + totalPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                             </li>
                           </ul>
                         </div>
@@ -198,7 +254,9 @@ const Checkout = ({ location, cartItems, currency }) => {
                       <div className="payment-method"></div>
                     </div>
                     <div className="place-order mt-25">
-                      <button className="btn-hover">Place Order</button>
+                      <button className="btn-hover" onClick={handleSubmit}>
+                        Đặt hàng
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -211,10 +269,8 @@ const Checkout = ({ location, cartItems, currency }) => {
                       <i className="pe-7s-cash"></i>
                     </div>
                     <div className="item-empty-area__text">
-                      No items found in cart to checkout <br />{" "}
-                      <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
-                        Shop Now
-                      </Link>
+                      Không tìm thấy sản phẩm nào trong giỏ hàng để thanh toán <br />{" "}
+                      <Link to={process.env.PUBLIC_URL + "/shop"}>Mua sắm ngay</Link>
                     </div>
                   </div>
                 </div>
@@ -230,14 +286,22 @@ const Checkout = ({ location, cartItems, currency }) => {
 Checkout.propTypes = {
   cartItems: PropTypes.array,
   currency: PropTypes.object,
-  location: PropTypes.object
+  location: PropTypes.object,
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     cartItems: state.cartData,
-    currency: state.currencyData
+    currency: state.currencyData,
   };
 };
 
-export default connect(mapStateToProps)(Checkout);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deleteAllFromCart: (addToast) => {
+      dispatch(deleteAllFromCart(addToast));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Checkout);

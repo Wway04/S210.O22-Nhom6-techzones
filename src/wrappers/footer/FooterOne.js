@@ -46,26 +46,26 @@ const FooterOne = ({
         <div className="row">
           <div className={`${sideMenu ? "col-xl-2 col-sm-4" : "col-lg-2 col-sm-4"}`}>
             {/* footer copyright */}
-            <FooterCopyright footerLogo="/assets/img/logo/logo.png" spaceBottomClass="mb-30" />
+            <FooterCopyright footerLogo="/assets/img/logo/logo-footer.png" spaceBottomClass="mb-30" />
           </div>
           <div className={`${sideMenu ? "col-xl-2 col-sm-4" : "col-lg-2 col-sm-4"}`}>
             <div className="footer-widget mb-30 ml-30">
               <div className="footer-title">
-                <h3>ABOUT US</h3>
+                <h3>VỀ CHÚNG TÔI</h3>
               </div>
               <div className="footer-list">
                 <ul>
                   <li>
-                    <Link to={process.env.PUBLIC_URL + "/about"}>About us</Link>
+                    <Link to={process.env.PUBLIC_URL + "/about"}>Về chúng tôi</Link>
                   </li>
                   <li>
-                    <Link to={process.env.PUBLIC_URL + "#/"}>Store location</Link>
+                    <Link to={process.env.PUBLIC_URL + "/contact"}>Địa chỉ cửa hàng</Link>
                   </li>
                   <li>
-                    <Link to={process.env.PUBLIC_URL + "/contact"}>Contact</Link>
+                    <Link to={process.env.PUBLIC_URL + "/contact"}>Liên hệ</Link>
                   </li>
                   <li>
-                    <Link to={process.env.PUBLIC_URL + "#/"}>Orders tracking</Link>
+                    <Link to={process.env.PUBLIC_URL + "#/"}>Theo dõi đơn hàng</Link>
                   </li>
                 </ul>
               </div>
@@ -74,18 +74,18 @@ const FooterOne = ({
           <div className={`${sideMenu ? "col-xl-2 col-sm-4" : "col-lg-2 col-sm-4"}`}>
             <div className={`${sideMenu ? "footer-widget mb-30 ml-95" : "footer-widget mb-30 ml-50"}`}>
               <div className="footer-title">
-                <h3>USEFUL LINKS</h3>
+                <h3>LIÊN KẾT</h3>
               </div>
               <div className="footer-list">
                 <ul>
                   <li>
-                    <Link to={process.env.PUBLIC_URL + "#/"}>Returns</Link>
+                    <Link to={process.env.PUBLIC_URL + "/shop"}>Cửa hàng</Link>
                   </li>
                   <li>
-                    <Link to={process.env.PUBLIC_URL + "#/"}>Support Policy</Link>
+                    <Link to={process.env.PUBLIC_URL + "/wishlist"}>Bộ sưu tập</Link>
                   </li>
                   <li>
-                    <Link to={process.env.PUBLIC_URL + "#/"}>Size guide</Link>
+                    <Link to={process.env.PUBLIC_URL + "/contact"}>Liên hệ</Link>
                   </li>
                   <li>
                     <Link to={process.env.PUBLIC_URL + "#/"}>FAQs</Link>
@@ -97,7 +97,7 @@ const FooterOne = ({
           <div className={`${sideMenu ? "col-xl-3 col-sm-4" : "col-lg-2 col-sm-6"}`}>
             <div className={`${sideMenu ? "footer-widget mb-30 ml-145" : "footer-widget mb-30 ml-75"}`}>
               <div className="footer-title">
-                <h3>FOLLOW US</h3>
+                <h3>THEO DÕI</h3>
               </div>
               <div className="footer-list">
                 <ul>

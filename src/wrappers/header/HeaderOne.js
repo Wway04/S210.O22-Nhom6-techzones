@@ -48,11 +48,11 @@ const HeaderOne = ({ layout, top, borderStyle, headerPaddingClass, headerPositio
         <div className={layout === "container-fluid" ? layout : "container"}>
           <div className="row">
             <div className="col-xl-2 col-lg-2 col-md-6 col-4">
-              {/* header logo */}
-              <Logo imageUrl="/assets/img/logo/logo.png" logoClass="logo" />
+              {/* header logo -- logo web */}
+              <Logo imageUrl="/assets/img/logo/TechZones.png" logoClass="logo" />
             </div>
             <div className="col-xl-8 col-lg-8 d-none d-lg-block">
-              {/* Nav menu */}
+              {/* Nav menu - home - shop - collection - contact us */}
               <NavMenu />
             </div>
             <div className="col-xl-2 col-lg-2 col-md-6 col-8">

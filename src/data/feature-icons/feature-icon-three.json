@@ -2,19 +2,19 @@
   {
     "id": 1,
     "image": "/assets/img/icon-img/support-1.png",
-    "title": "Free Shipping",
-    "subtitle": "Free shipping on all order"
+    "title": "Miễn phí giao hàng",
+    "subtitle": "Miễn phí giao hàng cho tất cả các đơn hàng"
   },
   {
     "id": 2,
     "image": "/assets/img/icon-img/support-2.png",
-    "title": "Support 24/7",
-    "subtitle": "Free shipping on all order"
+    "title": "Hỗ trợ 24/7",
+    "subtitle": "Chăm sóc khách hàng"
   },
   {
     "id": 3,
     "image": "/assets/img/icon-img/support-3.png",
-    "title": "Money Return",
-    "subtitle": "Free shipping on all order"
+    "title": "Hoàn tiền",
+    "subtitle": "Hoàn tiền nhanh chóng"
   }
 ]

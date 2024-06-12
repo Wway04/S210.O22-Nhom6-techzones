@@ -1,16 +1,16 @@
 [
   {
     "id": 1,
-    "title": "Sale Off 40%",
-    "subtitle": "Summer Offer <br>2020 Collection",
-    "image": "/assets/img/slider/slider-2-2.jpg",
-    "url": "/shop-grid-standard"
+    "title": "Giảm giá 10%",
+    "subtitle": "iPhone 15 Pro <br>Công nghệ mới",
+    "image": "/assets/img/slider/1.png",
+    "url": "/shop"
   },
   {
     "id": 2,
-    "title": "Sale Off 20%",
-    "subtitle": "Summer Offer <br>2020 Collection",
-    "image": "/assets/img/slider/slider-1.jpg",
-    "url": "/shop-grid-standard"
+    "title": "Giảm giá 10%",
+    "subtitle": "iPhone 13 <br>Trải nghiệm chưa từng có",
+    "image": "/assets/img/slider/2.png",
+    "url": "/shop"
   }
 ]

@@ -12,30 +12,18 @@ import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import Rating from "../../components/product/sub-components/ProductRating";
 
-const Compare = ({
-  location,
-  cartItems,
-  compareItems,
-  addToCart,
-  deleteFromCompare,
-  currency
-}) => {
+const Compare = ({ location, cartItems, compareItems, addToCart, deleteFromCompare, currency }) => {
   const { pathname } = location;
   const { addToast } = useToasts();
 
   return (
     <Fragment>
       <MetaTags>
-        <title>Flone | Compare</title>
-        <meta
-          name="description"
-          content="Compare page of flone react minimalist eCommerce template."
-        />
+        <title>TechZones | Compare</title>
+        <meta name="description" content="Compare page of techzones react minimalist eCommerce template." />
       </MetaTags>
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
-        Compare
-      </BreadcrumbsItem>
+      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>TRANG CHỦ</BreadcrumbsItem>
+      <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>SO SÁNH</BreadcrumbsItem>
       <LayoutOne headerTop="visible">
         {/* breadcrumb */}
         <Breadcrumb />
@@ -49,97 +37,52 @@ const Compare = ({
                       <table className="table table-bordered mb-0">
                         <tbody>
                           <tr>
-                            <th className="title-column">Product Info</th>
+                            <th className="title-column">Thông tin sản phẩm</th>
                             {compareItems.map((compareItem, key) => {
-                              const cartItem = cartItems.filter(
-                                item => item.id === compareItem.id
-                              )[0];
+                              const cartItem = cartItems.filter((item) => item.id === compareItem.id)[0];
                               return (
                                 <td className="product-image-title" key={key}>
                                   <div className="compare-remove">
-                                    <button
-                                      onClick={() =>
-                                        deleteFromCompare(compareItem, addToast)
-                                      }
-                                    >
+                                    <button onClick={() => deleteFromCompare(compareItem, addToast)}>
                                       <i className="pe-7s-trash" />
                                     </button>
                                   </div>
-                                  <Link
-                                    to={
-                                      process.env.PUBLIC_URL +
-                                      "/product/" +
-                                      compareItem.id
-                                    }
-                                    className="image"
-                                  >
+                                  <Link to={process.env.PUBLIC_URL + "/product/" + compareItem.id} className="image">
                                     <img
                                       className="img-fluid"
-                                      src={
-                                        process.env.PUBLIC_URL +
-                                        compareItem.image[0]
-                                      }
+                                      src={process.env.PUBLIC_URL + compareItem.image[0]}
                                       alt=""
                                     />
                                   </Link>
                                   <div className="product-title">
-                                    <Link
-                                      to={
-                                        process.env.PUBLIC_URL +
-                                        "/product/" +
-                                        compareItem.id
-                                      }
-                                    >
+                                    <Link to={process.env.PUBLIC_URL + "/product/" + compareItem.id}>
                                       {compareItem.name}
                                     </Link>
                                   </div>
                                   <div className="compare-btn">
                                     {compareItem.affiliateLink ? (
-                                      <a
-                                        href={compareItem.affiliateLink}
-                                        rel="noopener noreferrer"
-                                        target="_blank"
-                                      >
+                                      <a href={compareItem.affiliateLink} rel="noopener noreferrer" target="_blank">
                                         {" "}
                                         Buy now{" "}
                                       </a>
-                                    ) : compareItem.variation &&
-                                      compareItem.variation.length >= 1 ? (
-                                      <Link
-                                        to={`${process.env.PUBLIC_URL}/product/${compareItem.id}`}
-                                      >
+                                    ) : compareItem.variation && compareItem.variation.length >= 1 ? (
+                                      <Link to={`${process.env.PUBLIC_URL}/product/${compareItem.id}`}>
                                         Select Option
                                       </Link>
-                                    ) : compareItem.stock &&
-                                      compareItem.stock > 0 ? (
+                                    ) : compareItem.stock && compareItem.stock > 0 ? (
                                       <button
-                                        onClick={() =>
-                                          addToCart(compareItem, addToast)
-                                        }
-                                        className={
-                                          cartItem !== undefined &&
-                                          cartItem.quantity > 0
-                                            ? "active"
-                                            : ""
-                                        }
-                                        disabled={
-                                          cartItem !== undefined &&
-                                          cartItem.quantity > 0
-                                        }
-                                        title={
-                                          compareItem !== undefined
-                                            ? "Added to cart"
-                                            : "Add to cart"
-                                        }
+                                        onClick={() => addToCart(compareItem, addToast)}
+                                        className={cartItem !== undefined && cartItem.quantity > 0 ? "active" : ""}
+                                        disabled={cartItem !== undefined && cartItem.quantity > 0}
+                                        title={compareItem !== undefined ? "Đã thêm vào giỏ hàng" : "Thêm vào giỏ hàng"}
                                       >
-                                        {cartItem !== undefined &&
-                                        cartItem.quantity > 0
-                                          ? "Added"
-                                          : "Add to cart"}
+                                        {cartItem !== undefined && cartItem.quantity > 0
+                                          ? "Đã thêm"
+                                          : "Thêm vào giỏ hàng"}
                                       </button>
                                     ) : (
                                       <button disabled className="active">
-                                        Out of Stock
+                                        Hết hàng
                                       </button>
                                     )}
                                   </div>
@@ -148,36 +91,24 @@ const Compare = ({
                             })}
                           </tr>
                           <tr>
-                            <th className="title-column">Price</th>
+                            <th className="title-column">Giá</th>
                             {compareItems.map((compareItem, key) => {
-                              const discountedPrice = getDiscountPrice(
-                                compareItem.price,
-                                compareItem.discount
-                              );
-                              const finalProductPrice = (
-                                compareItem.price * currency.currencyRate
-                              ).toFixed(2);
-                              const finalDiscountedPrice = (
-                                discountedPrice * currency.currencyRate
-                              ).toFixed(2);
+                              const discountedPrice = getDiscountPrice(compareItem.price, compareItem.discount);
+                              const finalProductPrice = (compareItem.price * currency.currencyRate)
+                                .toFixed(2)
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                              const finalDiscountedPrice = (discountedPrice * currency.currencyRate)
+                                .toFixed(2)
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                               return (
                                 <td className="product-price" key={key}>
                                   {discountedPrice !== null ? (
                                     <Fragment>
-                                      <span className="amount old">
-                                        {currency.currencySymbol +
-                                          finalProductPrice}
-                                      </span>
-                                      <span className="amount">
-                                        {currency.currencySymbol +
-                                          finalDiscountedPrice}
-                                      </span>
+                                      <span className="amount old">{currency.currencySymbol + finalProductPrice}</span>
+                                      <span className="amount">{currency.currencySymbol + finalDiscountedPrice}</span>
                                     </Fragment>
                                   ) : (
-                                    <span className="amount">
-                                      {currency.currencySymbol +
-                                        finalProductPrice}
-                                    </span>
+                                    <span className="amount">{currency.currencySymbol + finalProductPrice}</span>
                                   )}
                                 </td>
                               );
@@ -185,22 +116,18 @@ const Compare = ({
                           </tr>
 
                           <tr>
-                            <th className="title-column">Description</th>
+                            <th className="title-column">Mô tả</th>
                             {compareItems.map((compareItem, key) => {
                               return (
                                 <td className="product-desc" key={key}>
-                                  <p>
-                                    {compareItem.shortDescription
-                                      ? compareItem.shortDescription
-                                      : "N/A"}
-                                  </p>
+                                  <p>{compareItem.shortDescription ? compareItem.shortDescription : "N/A"}</p>
                                 </td>
                               );
                             })}
                           </tr>
 
                           <tr>
-                            <th className="title-column">Rating</th>
+                            <th className="title-column">Đánh giá</th>
                             {compareItems.map((compareItem, key) => {
                               return (
                                 <td className="product-rating" key={key}>
@@ -223,10 +150,8 @@ const Compare = ({
                       <i className="pe-7s-shuffle"></i>
                     </div>
                     <div className="item-empty-area__text">
-                      No items found in compare <br />{" "}
-                      <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
-                        Add Items
-                      </Link>
+                      Không có sản phẩm nào để so sánh <br />{" "}
+                      <Link to={process.env.PUBLIC_URL + "/shop"}>Thêm sản phẩm</Link>
                     </div>
                   </div>
                 </div>
@@ -245,18 +170,18 @@ Compare.propTypes = {
   compareItems: PropTypes.array,
   currency: PropTypes.object,
   location: PropTypes.object,
-  deleteFromCompare: PropTypes.func
+  deleteFromCompare: PropTypes.func,
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     cartItems: state.cartData,
     compareItems: state.compareData,
-    currency: state.currencyData
+    currency: state.currencyData,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     addToCart: (item, addToast, quantityCount) => {
       dispatch(addToCart(item, addToast, quantityCount));
@@ -264,7 +189,7 @@ const mapDispatchToProps = dispatch => {
 
     deleteFromCompare: (item, addToast) => {
       dispatch(deleteFromCompare(item, addToast));
-    }
+    },
   };
 };
 

@@ -15,16 +15,10 @@ const HeroSliderNineSingle = ({ data, sliderClass }) => {
           <div className="col-xl-6 col-lg-6 col-md-7 ml-auto">
             <div className="slider-content-2 slider-animated-1">
               <h3 className="animated">{data.title}</h3>
-              <h1
-                className="animated"
-                dangerouslySetInnerHTML={{ __html: data.subtitle }}
-              ></h1>
+              <h1 className="animated" dangerouslySetInnerHTML={{ __html: data.subtitle }}></h1>
               <div className="slider-btn btn-hover">
-                <Link
-                  className="animated"
-                  to={process.env.PUBLIC_URL + data.url}
-                >
-                  SHOP NOW
+                <Link className="animated" to={process.env.PUBLIC_URL + data.url}>
+                  Mua sắm ngay
                 </Link>
               </div>
             </div>
@@ -37,7 +31,7 @@ const HeroSliderNineSingle = ({ data, sliderClass }) => {
 
 HeroSliderNineSingle.propTypes = {
   data: PropTypes.object,
-  sliderClass: PropTypes.string
+  sliderClass: PropTypes.string,
 };
 
 export default HeroSliderNineSingle;

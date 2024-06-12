@@ -4,18 +4,25 @@ import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import MetaTags from "react-meta-tags";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
+import { useToasts } from "react-toast-notifications";
 
 const Contact = ({ location }) => {
   const { pathname } = location;
+  const { addToast } = useToasts();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addToast("Your message has been sent successfully", { appearance: "success", autoDismiss: true });
+  };
 
   return (
     <Fragment>
       <MetaTags>
-        <title>Flone | Contact</title>
-        <meta name="description" content="Contact of flone react minimalist eCommerce template." />
+        <title>TechZones | Contact</title>
+        <meta name="description" content="Contact of techzones react minimalist eCommerce template." />
       </MetaTags>
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>Contact</BreadcrumbsItem>
+      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Trang chủ</BreadcrumbsItem>
+      <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>Liên Lạc</BreadcrumbsItem>
       <LayoutOne headerTop="visible">
         {/* breadcrumb */}
         <Breadcrumb />
@@ -29,8 +36,8 @@ const Contact = ({ location }) => {
                       <i className="fa fa-phone" />
                     </div>
                     <div className="contact-info-dec">
-                      <p>+012 345 678 102</p>
-                      <p>+012 345 678 102</p>
+                      <p>+123456789</p>
+                      <p>+987654321</p>
                     </div>
                   </div>
                   <div className="single-contact-info">
@@ -39,10 +46,10 @@ const Contact = ({ location }) => {
                     </div>
                     <div className="contact-info-dec">
                       <p>
-                        <a href="mailto:yourname@email.com">yourname@email.com</a>
+                        <a href="mailto:yourname@email.com">techzones@email.com</a>
                       </p>
                       <p>
-                        <a href="https://yourwebsitename.com">yourwebsitename.com</a>
+                        <a href="https://yourwebsitename.com">techzones.com</a>
                       </p>
                     </div>
                   </div>
@@ -51,8 +58,8 @@ const Contact = ({ location }) => {
                       <i className="fa fa-map-marker" />
                     </div>
                     <div className="contact-info-dec">
-                      <p>Address goes here, </p>
-                      <p>street, Crossroad 123.</p>
+                      <p>Địa chỉ: </p>
+                      <p>Thu Duc, Ho Chi Minh.</p>
                     </div>
                   </div>
                   <div className="contact-social text-center">
@@ -90,23 +97,23 @@ const Contact = ({ location }) => {
               <div className="col-lg-8 col-md-7">
                 <div className="contact-form">
                   <div className="contact-title mb-30">
-                    <h2>Get In Touch</h2>
+                    <h2>Liên lạc</h2>
                   </div>
                   <form className="contact-form-style">
                     <div className="row">
                       <div className="col-lg-6">
-                        <input name="name" placeholder="Name*" type="text" />
+                        <input name="name" placeholder="Tên" type="text" />
                       </div>
                       <div className="col-lg-6">
-                        <input name="email" placeholder="Email*" type="email" />
+                        <input name="email" placeholder="Email" type="email" />
                       </div>
                       <div className="col-lg-12">
-                        <input name="subject" placeholder="Subject*" type="text" />
+                        <input name="subject" placeholder="Chủ đề" type="text" />
                       </div>
                       <div className="col-lg-12">
-                        <textarea name="message" placeholder="Your Message*" defaultValue={""} />
-                        <button className="submit" type="submit">
-                          SEND
+                        <textarea name="message" placeholder="Nội dung" defaultValue={""} />
+                        <button className="submit" type="submit" onClick={handleSubmit}>
+                          GỬI
                         </button>
                       </div>
                     </div>

@@ -12,16 +12,11 @@ const NotFound = ({ location }) => {
   return (
     <Fragment>
       <MetaTags>
-        <title>Flone | Not Found</title>
-        <meta
-          name="description"
-          content="404 page of flone react minimalist eCommerce template."
-        />
+        <title>TechZones | Not Found</title>
+        <meta name="description" content="404 page of techzones react minimalist eCommerce template." />
       </MetaTags>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
-        404 page
-      </BreadcrumbsItem>
+      <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>404 page</BreadcrumbsItem>
       <LayoutOne headerTop="visible">
         {/* breadcrumb */}
         <Breadcrumb />
@@ -33,8 +28,8 @@ const NotFound = ({ location }) => {
                   <h1>404</h1>
                   <h2>OPPS! PAGE NOT FOUND</h2>
                   <p>
-                    Sorry but the page you are looking for does not exist, have
-                    been removed, name changed or is temporarity unavailable.
+                    Sorry but the page you are looking for does not exist, have been removed, name changed or is
+                    temporarity unavailable.
                   </p>
                   <form className="searchform mb-50">
                     <input
@@ -62,7 +57,7 @@ const NotFound = ({ location }) => {
 };
 
 NotFound.propTypes = {
-  location: PropTypes.object
+  location: PropTypes.object,
 };
 
 export default NotFound;

@@ -6,30 +6,15 @@ import TeamMemberOneSingle from "../../components/team-member/TeamMemberOneSingl
 
 const TeamMemberOne = ({ spaceTopClass, spaceBottomClass }) => {
   return (
-    <div
-      className={`team-area ${spaceTopClass ? spaceTopClass : ""} ${
-        spaceBottomClass ? spaceBottomClass : ""
-      }`}
-    >
+    <div className={`team-area ${spaceTopClass ? spaceTopClass : ""} ${spaceBottomClass ? spaceBottomClass : ""}`}>
       <div className="container">
         {/* section title */}
-        <SectionTitleTwo
-          titleText="Team Members"
-          subTitleText="Lorem ipsum dolor sit amet conse ctetu."
-          positionClass="text-center"
-          spaceClass="mb-60"
-        />
+        <SectionTitleTwo titleText="Thành viên nhóm" subTitleText="" positionClass="text-center" spaceClass="mb-60" />
 
         <div className="row">
           {teamMemberData &&
             teamMemberData.map((single, key) => {
-              return (
-                <TeamMemberOneSingle
-                  data={single}
-                  spaceBottomClass="mb-30"
-                  key={key}
-                />
-              );
+              return <TeamMemberOneSingle data={single} spaceBottomClass="mb-30" key={key} />;
             })}
         </div>
       </div>
@@ -39,7 +24,7 @@ const TeamMemberOne = ({ spaceTopClass, spaceBottomClass }) => {
 
 TeamMemberOne.propTypes = {
   spaceBottomClass: PropTypes.string,
-  spaceTopClass: PropTypes.string
+  spaceTopClass: PropTypes.string,
 };
 
 export default TeamMemberOne;

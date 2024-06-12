@@ -19,7 +19,7 @@ const ProductGridTwo = ({
   sliderClassName,
   spaceBottomClass,
   colorClass,
-  titlePriceClass
+  titlePriceClass,
 }) => {
   return (
     <Fragment>
@@ -34,19 +34,9 @@ const ProductGridTwo = ({
             addToCart={addToCart}
             addToWishlist={addToWishlist}
             addToCompare={addToCompare}
-            cartItem={
-              cartItems.filter((cartItem) => cartItem.id === product.id)[0]
-            }
-            wishlistItem={
-              wishlistItems.filter(
-                (wishlistItem) => wishlistItem.id === product.id
-              )[0]
-            }
-            compareItem={
-              compareItems.filter(
-                (compareItem) => compareItem.id === product.id
-              )[0]
-            }
+            cartItem={cartItems.filter((cartItem) => cartItem.id === product.id)[0]}
+            wishlistItem={wishlistItems.filter((wishlistItem) => wishlistItem.id === product.id)[0]}
+            compareItem={compareItems.filter((compareItem) => compareItem.id === product.id)[0]}
             key={product.id}
             titlePriceClass={titlePriceClass}
           />
@@ -68,49 +58,30 @@ ProductGridTwo.propTypes = {
   spaceBottomClass: PropTypes.string,
   colorClass: PropTypes.string,
   titlePriceClass: PropTypes.string,
-  wishlistItems: PropTypes.array
+  wishlistItems: PropTypes.array,
 };
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    products: getProducts(
-      state.productData.products,
-      ownProps.category,
-      ownProps.type,
-      ownProps.limit
-    ),
+    products: getProducts(state.productData.products, ownProps.category, ownProps.type, ownProps.limit),
     currency: state.currencyData,
     cartItems: state.cartData,
     wishlistItems: state.wishlistData,
-    compareItems: state.compareData
+    compareItems: state.compareData,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addToCart: (
-      item,
-      addToast,
-      quantityCount,
-      selectedProductColor,
-      selectedProductSize
-    ) => {
-      dispatch(
-        addToCart(
-          item,
-          addToast,
-          quantityCount,
-          selectedProductColor,
-          selectedProductSize
-        )
-      );
+    addToCart: (item, addToast, quantityCount, selectedProductColor, selectedProductSize) => {
+      dispatch(addToCart(item, addToast, quantityCount, selectedProductColor, selectedProductSize));
     },
     addToWishlist: (item, addToast) => {
       dispatch(addToWishlist(item, addToast));
     },
     addToCompare: (item, addToast) => {
       dispatch(addToCompare(item, addToast));
-    }
+    },
   };
 };
 

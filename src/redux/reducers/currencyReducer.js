@@ -1,9 +1,9 @@
 import { SET_CURRENCY } from "../actions/currencyActions";
 
 const initState = {
-  currencySymbol: "€",
-  currencyName: "EUR",
-  currencyRate: 1
+  currencySymbol: "VND",
+  currencyName: "VND",
+  currencyRate: 20000,
 };
 
 const currencyReducer = (state = initState, action) => {
@@ -15,27 +15,18 @@ const currencyReducer = (state = initState, action) => {
         ...state,
         currencySymbol: "$",
         currencyRate: action.payload.currencyRate,
-        currencyName
+        currencyName,
       };
     }
-    if (currencyName === "EUR") {
+    if (currencyName === "VND") {
       return {
         ...state,
-        currencySymbol: "€",
+        currencySymbol: "VND",
         currencyRate: action.payload.currencyRate,
-        currencyName
-      };
-    }
-    if (currencyName === "GBP") {
-      return {
-        ...state,
-        currencySymbol: "£",
-        currencyRate: action.payload.currencyRate,
-        currencyName
+        currencyName,
       };
     }
   }
-
   return state;
 };
 

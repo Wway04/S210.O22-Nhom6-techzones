@@ -1,28 +1,66 @@
 import PropTypes from "prop-types";
-import React, { Fragment } from "react";
+import React, { Fragment, useContext, useState } from "react";
 import MetaTags from "react-meta-tags";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import Card from "react-bootstrap/Card";
 import Accordion from "react-bootstrap/Accordion";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
+import { UserContext } from "../../App";
+import { useToasts } from "react-toast-notifications";
+
+const URL = "http://localhost:3001/api/v1/users";
 
 const MyAccount = ({ location }) => {
+  const { addToast } = useToasts();
+  const user = useContext(UserContext);
+  console.log("🚀 ~ MyAccount ~ user:", user);
+  const [password, setPassword] = useState();
+  const [passwordConfirm, setPasswordConfirm] = useState();
+  const [name, setName] = useState(user?.user?.name);
+  const [email, setEmail] = useState(user?.user?.email);
   const { pathname } = location;
+
+  const handleUpdateInfo = () => {
+    if (name === user?.user?.username && password === user?.user?.password && email === user?.user?.email) {
+      addToast("Without any changes", { appearance: "error", autoDismiss: true, PlacementType: "top-left" });
+      return;
+    }
+    async function updateUser(url = "", data = {}) {
+      // Default options are marked with *
+      const response = await fetch(url, {
+        method: "PUT", // *GET, POST, PUT, DELETE, etc.
+        mode: "cors", // no-cors, *cors, same-origin
+        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: "same-origin", // include, *same-origin, omit
+        headers: {
+          "Content-Type": "application/json",
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: "follow", // manual, *follow, error
+        referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify(data), // body data type must match "Content-Type" header
+      });
+      const result = await response.json();
+      localStorage.setItem("user", JSON.stringify({ id: user?.user?.id, name, email, password }));
+      setPassword("");
+      setPasswordConfirm("");
+      user.setUser({ id: user?.user?.id, name, email, password });
+      addToast("Successful change", { appearance: "success", autoDismiss: true, PlacementType: "top-left" });
+      return result; // parses JSON response into native JavaScript objects
+    }
+
+    updateUser(URL, { id: user?.user?.id, name, email, password });
+  };
 
   return (
     <Fragment>
       <MetaTags>
-        <title>Flone | My Account</title>
-        <meta
-          name="description"
-          content="Compare page of flone react minimalist eCommerce template."
-        />
+        <title>TechZones | My Account</title>
+        <meta name="description" content="Compare page of techzones react minimalist eCommerce template." />
       </MetaTags>
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
-        My Account
-      </BreadcrumbsItem>
+      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Trang chủ</BreadcrumbsItem>
+      <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>Tài khoản của bạn</BreadcrumbsItem>
       <LayoutOne headerTop="visible">
         {/* breadcrumb */}
         <Breadcrumb />
@@ -36,7 +74,7 @@ const MyAccount = ({ location }) => {
                       <Card.Header className="panel-heading">
                         <Accordion.Toggle variant="link" eventKey="0">
                           <h3 className="panel-title">
-                            <span>1 .</span> Edit your account information{" "}
+                            <span>1 .</span> Chỉnh sửa thông tin
                           </h3>
                         </Accordion.Toggle>
                       </Card.Header>
@@ -44,44 +82,33 @@ const MyAccount = ({ location }) => {
                         <Card.Body>
                           <div className="myaccount-info-wrapper">
                             <div className="account-info-wrapper">
-                              <h4>My Account Information</h4>
-                              <h5>Your Personal Details</h5>
+                              <h4>Thông tin của tôi</h4>
                             </div>
                             <div className="row">
-                              <div className="col-lg-6 col-md-6">
-                                <div className="billing-info">
-                                  <label>First Name</label>
-                                  <input type="text" />
-                                </div>
-                              </div>
-                              <div className="col-lg-6 col-md-6">
-                                <div className="billing-info">
-                                  <label>Last Name</label>
-                                  <input type="text" />
-                                </div>
-                              </div>
                               <div className="col-lg-12 col-md-12">
                                 <div className="billing-info">
-                                  <label>Email Address</label>
-                                  <input type="email" />
+                                  <label>Tên</label>
+                                  <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
                                 </div>
                               </div>
                               <div className="col-lg-6 col-md-6">
                                 <div className="billing-info">
-                                  <label>Telephone</label>
-                                  <input type="text" />
+                                  <label>Email</label>
+                                  <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                                 </div>
                               </div>
                               <div className="col-lg-6 col-md-6">
                                 <div className="billing-info">
-                                  <label>Fax</label>
+                                  <label>Số điện thoại</label>
                                   <input type="text" />
                                 </div>
                               </div>
                             </div>
                             <div className="billing-back-btn">
                               <div className="billing-btn">
-                                <button type="submit">Continue</button>
+                                <button type="submit" onClick={handleUpdateInfo}>
+                                  Tiếp tục
+                                </button>
                               </div>
                             </div>
                           </div>
@@ -92,7 +119,7 @@ const MyAccount = ({ location }) => {
                       <Card.Header className="panel-heading">
                         <Accordion.Toggle variant="link" eventKey="1">
                           <h3 className="panel-title">
-                            <span>2 .</span> Change your password
+                            <span>2 .</span> Đổi mật khẩu
                           </h3>
                         </Accordion.Toggle>
                       </Card.Header>
@@ -100,68 +127,36 @@ const MyAccount = ({ location }) => {
                         <Card.Body>
                           <div className="myaccount-info-wrapper">
                             <div className="account-info-wrapper">
-                              <h4>Change Password</h4>
-                              <h5>Your Password</h5>
+                              <h4>Đổi mật khẩu</h4>
+                              <h5>Mật khẩu của bạn</h5>
                             </div>
                             <div className="row">
                               <div className="col-lg-12 col-md-12">
                                 <div className="billing-info">
-                                  <label>Password</label>
-                                  <input type="password" />
+                                  <label>Mật khẩu</label>
+                                  <input
+                                    type="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                  />
                                 </div>
                               </div>
                               <div className="col-lg-12 col-md-12">
                                 <div className="billing-info">
-                                  <label>Password Confirm</label>
-                                  <input type="password" />
+                                  <label>Xác nhận mật khẩu</label>
+                                  <input
+                                    type="password"
+                                    value={passwordConfirm}
+                                    onChange={(e) => setPasswordConfirm(e.target.value)}
+                                  />
                                 </div>
                               </div>
                             </div>
                             <div className="billing-back-btn">
                               <div className="billing-btn">
-                                <button type="submit">Continue</button>
-                              </div>
-                            </div>
-                          </div>
-                        </Card.Body>
-                      </Accordion.Collapse>
-                    </Card>
-                    <Card className="single-my-account mb-20">
-                      <Card.Header className="panel-heading">
-                        <Accordion.Toggle variant="link" eventKey="2">
-                          <h3 className="panel-title">
-                            <span>3 .</span> Modify your address book entries{" "}
-                          </h3>
-                        </Accordion.Toggle>
-                      </Card.Header>
-                      <Accordion.Collapse eventKey="2">
-                        <Card.Body>
-                          <div className="myaccount-info-wrapper">
-                            <div className="account-info-wrapper">
-                              <h4>Address Book Entries</h4>
-                            </div>
-                            <div className="entries-wrapper">
-                              <div className="row">
-                                <div className="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
-                                  <div className="entries-info text-center">
-                                    <p>John Doe</p>
-                                    <p>Paul Park </p>
-                                    <p>Lorem ipsum dolor set amet</p>
-                                    <p>NYC</p>
-                                    <p>New York</p>
-                                  </div>
-                                </div>
-                                <div className="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
-                                  <div className="entries-edit-delete text-center">
-                                    <button className="edit">Edit</button>
-                                    <button>Delete</button>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="billing-back-btn">
-                              <div className="billing-btn">
-                                <button type="submit">Continue</button>
+                                <button type="submit" onClick={handleUpdateInfo}>
+                                  Tiếp tục
+                                </button>
                               </div>
                             </div>
                           </div>
@@ -180,7 +175,7 @@ const MyAccount = ({ location }) => {
 };
 
 MyAccount.propTypes = {
-  location: PropTypes.object
+  location: PropTypes.object,
 };
 
 export default MyAccount;

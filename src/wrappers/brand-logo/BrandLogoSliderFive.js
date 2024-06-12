@@ -10,35 +10,33 @@ const BrandLogoSliderFive = ({ spaceBottomClass, spaceTopClass }) => {
     loop: true,
     autoplay: {
       delay: 3000,
-      disableOnInteraction: false
+      disableOnInteraction: false,
     },
     grabCursor: true,
     breakpoints: {
       1024: {
-        slidesPerView: 5
+        slidesPerView: 3,
       },
       768: {
-        slidesPerView: 4
+        slidesPerView: 3,
       },
       640: {
-        slidesPerView: 3
+        slidesPerView: 3,
       },
       320: {
-        slidesPerView: 2
-      }
-    }
+        slidesPerView: 3,
+      },
+    },
   };
 
   return (
     <div
-      className={`brand-logo-area ${
-        spaceBottomClass ? spaceBottomClass : ""
-      }  ${spaceTopClass ? spaceTopClass : ""}`}
+      className={`brand-logo-area ${spaceBottomClass ? spaceBottomClass : ""}  ${spaceTopClass ? spaceTopClass : ""}`}
     >
       <div className="container">
         <SectionTitle
-          titleText="Our Brands"
-          subtitleText="Choose Your Favorite Brand"
+          titleText="Thương hiệu"
+          subtitleText="Chọn thương hiệu yêu thích của bạn"
           subtitleColorClass="grey"
           positionClass="text-center"
           spaceClass="mb-55"
@@ -48,13 +46,7 @@ const BrandLogoSliderFive = ({ spaceBottomClass, spaceTopClass }) => {
           <Swiper {...settings}>
             {brandLogoData &&
               brandLogoData.map((single, key) => {
-                return (
-                  <BrandLogoOneSingle
-                    data={single}
-                    key={key}
-                    sliderClassName="swiper-slide"
-                  />
-                );
+                return <BrandLogoOneSingle data={single} key={key} sliderClassName="swiper-slide" />;
               })}
           </Swiper>
         </div>
@@ -65,7 +57,7 @@ const BrandLogoSliderFive = ({ spaceBottomClass, spaceTopClass }) => {
 
 BrandLogoSliderFive.propTypes = {
   spaceBottomClass: PropTypes.string,
-  spaceTopClass: PropTypes.string
+  spaceTopClass: PropTypes.string,
 };
 
 export default BrandLogoSliderFive;

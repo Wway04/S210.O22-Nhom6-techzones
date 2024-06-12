@@ -7,11 +7,7 @@ const Breadcrumb = () => {
     <div className="breadcrumb-area pt-35 pb-35 bg-gray-3">
       <div className="container">
         <div className="breadcrumb-content text-center">
-          <Breadcrumbs
-            separator={<span>/</span>}
-            item={NavLink}
-            finalItem={"span"}
-          />
+          <Breadcrumbs separator={<span>/</span>} item={NavLink} finalItem={"span"} />
         </div>
       </div>
     </div>

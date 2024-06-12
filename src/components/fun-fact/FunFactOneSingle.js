@@ -6,7 +6,7 @@ import VisibilitySensor from "react-visibility-sensor";
 const FunFactOneSingle = ({ data, spaceBottomClass, textAlignClass }) => {
   const [didViewCountUp, setDidViewCountUp] = useState(false);
 
-  const onVisibilityChange = isVisible => {
+  const onVisibilityChange = (isVisible) => {
     if (isVisible) {
       setDidViewCountUp(true);
     }
@@ -14,19 +14,13 @@ const FunFactOneSingle = ({ data, spaceBottomClass, textAlignClass }) => {
   return (
     <div className="col-lg-3 col-md-6 col-sm-6">
       <div
-        className={`single-count ${textAlignClass ? textAlignClass : ""} ${
-          spaceBottomClass ? spaceBottomClass : ""
-        }`}
+        className={`single-count ${textAlignClass ? textAlignClass : ""} ${spaceBottomClass ? spaceBottomClass : ""}`}
       >
         <div className="count-icon">
           <i className={data.iconClass} />
         </div>
         <h2 className="count">
-          <VisibilitySensor
-            onChange={onVisibilityChange}
-            offset={{ top: 10 }}
-            delayedCall
-          >
+          <VisibilitySensor onChange={onVisibilityChange} offset={{ top: 10 }} delayedCall>
             <CountUp end={didViewCountUp ? data.countNum : 0} />
           </VisibilitySensor>
         </h2>
@@ -39,7 +33,7 @@ const FunFactOneSingle = ({ data, spaceBottomClass, textAlignClass }) => {
 FunFactOneSingle.propTypes = {
   data: PropTypes.object,
   spaceBottomClass: PropTypes.string,
-  textAlignClass: PropTypes.string
+  textAlignClass: PropTypes.string,
 };
 
 export default FunFactOneSingle;

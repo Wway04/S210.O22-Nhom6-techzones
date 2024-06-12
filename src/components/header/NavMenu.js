@@ -9,10 +9,10 @@ const NavMenu = ({ strings, menuWhiteClass, sidebarMenu }) => {
       <nav>
         <ul>
           <li>
-            <Link to={process.env.PUBLIC_URL + "/home-fashion-six"}>{strings["home"]}</Link>
+            <Link to={process.env.PUBLIC_URL + "/"}>{strings["home"]}</Link>
           </li>
           <li>
-            <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>{strings["shop"]}</Link>
+            <Link to={process.env.PUBLIC_URL + "/shop"}>{strings["shop"]}</Link>
           </li>
           <li>
             <Link to={process.env.PUBLIC_URL + "/wishlist"}>{strings["collection"]}</Link>

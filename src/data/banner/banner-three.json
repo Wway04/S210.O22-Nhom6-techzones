@@ -1,18 +1,18 @@
 [
   {
     "id": 1,
-    "image": "/assets/img/banner/banner-8.png",
-    "title": "HeadPhone",
-    "subtitle": "Starting at",
-    "price": "$99.00",
-    "link": "/shop-grid-standard"
+    "image": "/assets/img/banner/1.png",
+    "title": "IPHONE 15 PRO",
+    "subtitle": "Giá bán",
+    "price": "$1000.00",
+    "link": "/shop"
   },
   {
     "id": 2,
-    "image": "/assets/img/banner/banner-9.png",
-    "title": "Bluetooth",
-    "subtitle": "Starting at",
-    "price": "$79.00",
-    "link": "/shop-grid-standard"
+    "image": "/assets/img/banner/2.png",
+    "title": "IPHONE 14 PRO",
+    "subtitle": "Giá bán",
+    "price": "15,600,000",
+    "link": "/shop"
   }
 ]

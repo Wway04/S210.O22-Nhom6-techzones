@@ -10,17 +10,18 @@ import ProductDescriptionTab from "../../wrappers/product/ProductDescriptionTab"
 import ProductImageDescription from "../../wrappers/product/ProductImageDescription";
 
 const ProductFixedImage = ({ location, product }) => {
+  console.log("🚀 ~ ProductFixedImage ~ product:", product);
   const { pathname } = location;
 
   return (
     <Fragment>
       <MetaTags>
-        <title>Flone | Product Page</title>
+        <title>TechZones | Product Page</title>
         <meta name="description" content="Product page of flone react minimalist eCommerce template." />
       </MetaTags>
 
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>Shop Product</BreadcrumbsItem>
+      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Trang chủ</BreadcrumbsItem>
+      <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>Sản phẩm</BreadcrumbsItem>
 
       <LayoutOne headerTop="visible">
         {/* breadcrumb */}
@@ -35,10 +36,10 @@ const ProductFixedImage = ({ location, product }) => {
         />
 
         {/* product description tab */}
-        <ProductDescriptionTab spaceBottomClass="pb-90" productFullDesc={product.fullDescription} />
+        <ProductDescriptionTab spaceBottomClass="pb-90" product={product} productFullDesc={product?.fullDescription} />
 
         {/* related product slider */}
-        <RelatedProductSlider spaceBottomClass="pb-95" category={product.category[0]} />
+        <RelatedProductSlider spaceBottomClass="pb-95" category={product?.category} />
       </LayoutOne>
     </Fragment>
   );
@@ -52,7 +53,7 @@ ProductFixedImage.propTypes = {
 const mapStateToProps = (state, ownProps) => {
   const itemId = ownProps.match.params.id;
   return {
-    product: state.productData.products.filter((single) => single.id === itemId)[0],
+    product: state.productData.products.find((single) => single.id === parseInt(itemId)),
   };
 };
 

@@ -1,38 +1,38 @@
 [
   {
     "id": "1",
-    "image": "/assets/img/team/team-1.jpg",
-    "fbLink": "//www.facebook.com",
+    "image": "/assets/img/team/team-1.png",
+    "fbLink": "https://www.facebook.com/khang.huynhba.73",
     "twitterLink": "//www.twitter.com",
     "instagramLink": "//www.instagram.com",
-    "name": "Mr.Mike Banding",
-    "position": "Manager"
+    "name": "Huỳnh Bá Khang",
+    "position": "Nhóm trưởng"
   },
   {
     "id": "2",
-    "image": "/assets/img/team/team-3.jpg",
-    "fbLink": "//www.facebook.com",
+    "image": "/assets/img/team/team-1.png",
+    "fbLink": "https://www.facebook.com/profile.php?id=100009292610156",
     "twitterLink": "//www.twitter.com",
     "instagramLink": "//www.instagram.com",
-    "name": "Mr.Peter Pan",
-    "position": "Developer"
+    "name": "Lê Mai Quốc Khánh",
+    "position": "Thành viên"
   },
   {
     "id": "3",
-    "image": "/assets/img/team/team-2.jpg",
-    "fbLink": "//www.facebook.com",
+    "image": "/assets/img/team/team-2.png",
+    "fbLink": "https://www.facebook.com/thanhtuyen080204",
     "twitterLink": "//www.twitter.com",
     "instagramLink": "//www.instagram.com",
-    "name": "Ms.Sophia",
-    "position": "Designer"
+    "name": "Nguyễn Thị Thanh Tuyền",
+    "position": "Thành viên"
   },
   {
     "id": "4",
-    "image": "/assets/img/team/team-4.jpg",
-    "fbLink": "//www.facebook.com",
+    "image": "/assets/img/team/team-2.png",
+    "fbLink": "https://www.facebook.com/nho.nhi.33046",
     "twitterLink": "//www.twitter.com",
     "instagramLink": "//www.instagram.com",
-    "name": "Mr.John Lee",
-    "position": "Chairman"
+    "name": "Nguyên Thị Mỹ Huyền",
+    "position": "Thành viên"
   }
 ]

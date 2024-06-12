@@ -65,8 +65,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addToCart: (item, addToast, quantityCount, selectedProductColor, selectedProductSize) => {
-      dispatch(addToCart(item, addToast, quantityCount, selectedProductColor, selectedProductSize));
+    addToCart: (item, addToast, quantityCount) => {
+      dispatch(addToCart(item, addToast, quantityCount));
     },
     addToWishlist: (item, addToast) => {
       dispatch(addToWishlist(item, addToast));

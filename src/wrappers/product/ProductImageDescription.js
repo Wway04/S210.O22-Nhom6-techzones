@@ -19,10 +19,11 @@ const ProductImageDescription = ({
   const wishlistItem = wishlistItems.filter((wishlistItem) => wishlistItem.id === product.id)[0];
   const compareItem = compareItems.filter((compareItem) => compareItem.id === product.id)[0];
   const { addToast } = useToasts();
-
   const discountedPrice = getDiscountPrice(product.price, product.discount);
-  const finalProductPrice = +(product.price * currency.currencyRate).toFixed(2);
-  const finalDiscountedPrice = +(discountedPrice * currency.currencyRate).toFixed(2);
+  const finalProductPrice = (product.price * currency.currencyRate).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  const finalDiscountedPrice = (discountedPrice * currency.currencyRate)
+    .toFixed(2)
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
   return (
     <div className={`shop-area ${spaceTopClass ? spaceTopClass : ""} ${spaceBottomClass ? spaceBottomClass : ""}`}>

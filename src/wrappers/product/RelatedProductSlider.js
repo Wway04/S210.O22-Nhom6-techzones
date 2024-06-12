@@ -28,10 +28,10 @@ const RelatedProductSlider = ({ spaceBottomClass, category }) => {
   return (
     <div className={`related-product-area ${spaceBottomClass ? spaceBottomClass : ""}`}>
       <div className="container">
-        <SectionTitle titleText="Related Products" positionClass="text-center" spaceClass="mb-50" />
+        <SectionTitle titleText="Các sản phẩm liên quan" positionClass="text-center" spaceClass="mb-50" />
         <div className="row">
           <Swiper {...settings}>
-            <ProductGrid category={category} limit={6} sliderClassName="swiper-slide" />
+            <ProductGrid category={category} limit={5} sliderClassName="swiper-slide" />
           </Swiper>
         </div>
       </div>

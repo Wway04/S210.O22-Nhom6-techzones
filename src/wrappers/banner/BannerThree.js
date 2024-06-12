@@ -10,13 +10,7 @@ const BannerThree = ({ spaceBottomClass }) => {
         <div className="row">
           {bannerData &&
             bannerData.map((single, key) => {
-              return (
-                <BannerThreeSingle
-                  data={single}
-                  key={key}
-                  spaceBottomClass="mb-30"
-                />
-              );
+              return <BannerThreeSingle data={single} key={key} spaceBottomClass="mb-30" />;
             })}
         </div>
       </div>
@@ -25,7 +19,7 @@ const BannerThree = ({ spaceBottomClass }) => {
 };
 
 BannerThree.propTypes = {
-  spaceBottomClass: PropTypes.string
+  spaceBottomClass: PropTypes.string,
 };
 
 export default BannerThree;

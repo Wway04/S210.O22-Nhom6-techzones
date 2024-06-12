@@ -16,7 +16,14 @@ const HeaderTop = ({ currency, setCurrency, currentLanguageCode, dispatch, borde
       />
       <div className="header-offer">
         <p>
-          Free delivery on order over <span>{currency.currencySymbol + (200 * currency.currencyRate).toFixed(2)}</span>
+          Miễn phí giao hàng cho đơn hàng trên{" "}
+          <span>
+            {currency.currencyName === "VND"
+              ? (10 * currency.currencyRate).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+                " " +
+                currency.currencySymbol
+              : currency.currencySymbol + (10 * currency.currencyRate).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          </span>
         </p>
       </div>
     </div>

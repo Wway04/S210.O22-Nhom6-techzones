@@ -3,7 +3,8 @@ import React from "react";
 import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
 
-const ProductDescriptionTab = ({ spaceBottomClass, productFullDesc }) => {
+const ProductDescriptionTab = ({ spaceBottomClass, product, productFullDesc }) => {
+  console.log("🚀 ~ ProductDescriptionTab ~ product:", product);
   return (
     <div className={`description-review-area ${spaceBottomClass}`}>
       <div className="container">
@@ -11,13 +12,13 @@ const ProductDescriptionTab = ({ spaceBottomClass, productFullDesc }) => {
           <Tab.Container defaultActiveKey="productDescription">
             <Nav variant="pills" className="description-review-topbar">
               <Nav.Item>
-                <Nav.Link eventKey="additionalInfo">Additional Information</Nav.Link>
+                <Nav.Link eventKey="additionalInfo">Thông tin thêm</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="productDescription">Description</Nav.Link>
+                <Nav.Link eventKey="productDescription">Mô tả</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="productReviews">Reviews(2)</Nav.Link>
+                <Nav.Link eventKey="productReviews">Đánh giá(2)</Nav.Link>
               </Nav.Item>
             </Nav>
             <Tab.Content className="description-review-bottom">
@@ -25,16 +26,15 @@ const ProductDescriptionTab = ({ spaceBottomClass, productFullDesc }) => {
                 <div className="product-anotherinfo-wrapper">
                   <ul>
                     <li>
-                      <span>Weight</span> 400 g
+                      <span>Cân nặng:</span> {product.weight}
                     </li>
                     <li>
-                      <span>Dimensions</span>10 x 10 x 15 cm{" "}
+                      <span>Kích thước:</span>
+                      {product.dimensions}
                     </li>
                     <li>
-                      <span>Materials</span> 60% cotton, 40% polyester
-                    </li>
-                    <li>
-                      <span>Other Info</span> American heirloom jean shorts pug seitan letterpress
+                      <span>Chất liệu:</span>
+                      {product.materials}
                     </li>
                   </ul>
                 </div>
@@ -52,7 +52,7 @@ const ProductDescriptionTab = ({ spaceBottomClass, productFullDesc }) => {
                           <div className="review-top-wrap">
                             <div className="review-left">
                               <div className="review-name">
-                                <h4>White Lewis</h4>
+                                <h4>Khanh</h4>
                               </div>
                               <div className="review-rating">
                                 <i className="fa fa-star" />
@@ -63,15 +63,11 @@ const ProductDescriptionTab = ({ spaceBottomClass, productFullDesc }) => {
                               </div>
                             </div>
                             <div className="review-left">
-                              <button>Reply</button>
+                              <button>Phản hồi</button>
                             </div>
                           </div>
                           <div className="review-bottom">
-                            <p>
-                              Vestibulum ante ipsum primis aucibus orci luctustrices posuere cubilia Curae Suspendisse
-                              viverra ed viverra. Mauris ullarper euismod vehicula. Phasellus quam nisi, congue id
-                              nulla.
-                            </p>
+                            <p>Tôi đã mua và thấy rất máy dùng rất tốt :3</p>
                           </div>
                         </div>
                       </div>
@@ -83,7 +79,7 @@ const ProductDescriptionTab = ({ spaceBottomClass, productFullDesc }) => {
                           <div className="review-top-wrap">
                             <div className="review-left">
                               <div className="review-name">
-                                <h4>White Lewis</h4>
+                                <h4>Khang</h4>
                               </div>
                               <div className="review-rating">
                                 <i className="fa fa-star" />
@@ -94,15 +90,11 @@ const ProductDescriptionTab = ({ spaceBottomClass, productFullDesc }) => {
                               </div>
                             </div>
                             <div className="review-left">
-                              <button>Reply</button>
+                              <button>Phản hồi</button>
                             </div>
                           </div>
                           <div className="review-bottom">
-                            <p>
-                              Vestibulum ante ipsum primis aucibus orci luctustrices posuere cubilia Curae Suspendisse
-                              viverra ed viverra. Mauris ullarper euismod vehicula. Phasellus quam nisi, congue id
-                              nulla.
-                            </p>
+                            <p>Vay ha?</p>
                           </div>
                         </div>
                       </div>
@@ -110,11 +102,11 @@ const ProductDescriptionTab = ({ spaceBottomClass, productFullDesc }) => {
                   </div>
                   <div className="col-lg-5">
                     <div className="ratting-form-wrapper pl-50">
-                      <h3>Add a Review</h3>
+                      <h3></h3>
                       <div className="ratting-form">
                         <form action="#">
                           <div className="star-box">
-                            <span>Your rating:</span>
+                            <span>Đánh giá của bạn:</span>
                             <div className="ratting-star">
                               <i className="fa fa-star" />
                               <i className="fa fa-star" />
@@ -126,7 +118,7 @@ const ProductDescriptionTab = ({ spaceBottomClass, productFullDesc }) => {
                           <div className="row">
                             <div className="col-md-6">
                               <div className="rating-form-style mb-10">
-                                <input placeholder="Name" type="text" />
+                                <input placeholder="Tên" type="text" />
                               </div>
                             </div>
                             <div className="col-md-6">
@@ -136,8 +128,8 @@ const ProductDescriptionTab = ({ spaceBottomClass, productFullDesc }) => {
                             </div>
                             <div className="col-md-12">
                               <div className="rating-form-style form-submit">
-                                <textarea name="Your Review" placeholder="Message" defaultValue={""} />
-                                <input type="submit" defaultValue="Submit" />
+                                <textarea name="Your Review" placeholder="Nội dung" defaultValue={""} />
+                                <input type="submit" defaultValue="Xác nhận" />
                               </div>
                             </div>
                           </div>

@@ -13,16 +13,9 @@ const MenuCart = ({ cartData, currency, deleteFromCart }) => {
         <Fragment>
           <ul>
             {cartData.map((single, key) => {
-              const discountedPrice = getDiscountPrice(
-                single.price,
-                single.discount
-              );
-              const finalProductPrice = (
-                single.price * currency.currencyRate
-              ).toFixed(2);
-              const finalDiscountedPrice = (
-                discountedPrice * currency.currencyRate
-              ).toFixed(2);
+              const discountedPrice = getDiscountPrice(single.price, single.discount);
+              const finalProductPrice = single.price * currency.currencyRate;
+              const finalDiscountedPrice = discountedPrice * currency.currencyRate;
 
               discountedPrice != null
                 ? (cartTotalPrice += finalDiscountedPrice * single.quantity)
@@ -32,30 +25,26 @@ const MenuCart = ({ cartData, currency, deleteFromCart }) => {
                 <li className="single-shopping-cart" key={key}>
                   <div className="shopping-cart-img">
                     <Link to={process.env.PUBLIC_URL + "/product/" + single.id}>
-                      <img
-                        alt=""
-                        src={process.env.PUBLIC_URL + single.image[0]}
-                        className="img-fluid"
-                      />
+                      <img alt="" src={process.env.PUBLIC_URL + single.image[0]} className="img-fluid" />
                     </Link>
                   </div>
                   <div className="shopping-cart-title">
                     <h4>
-                      <Link
-                        to={process.env.PUBLIC_URL + "/product/" + single.id}
-                      >
-                        {" "}
-                        {single.name}{" "}
-                      </Link>
+                      <Link to={process.env.PUBLIC_URL + "/product/" + single.id}> {single.name} </Link>
                     </h4>
-                    <h6>Qty: {single.quantity}</h6>
+                    <h6>Số lượng: {single.quantity}</h6>
                     <span>
                       {discountedPrice !== null
-                        ? currency.currencySymbol + finalDiscountedPrice
-                        : currency.currencySymbol + finalProductPrice}
+                        ? currency.currencyName === "VND"
+                          ? finalDiscountedPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+                            currency.currencySymbol
+                          : currency.currencySymbol +
+                            finalDiscountedPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                        : currency.currencyName === "VND"
+                        ? finalProductPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + currency.currencySymbol
+                        : currency.currencySymbol + finalProductPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                     </span>
-                    {single.selectedProductColor &&
-                    single.selectedProductSize ? (
+                    {single.selectedProductColor && single.selectedProductSize ? (
                       <div className="cart-item-variation">
                         <span>Color: {single.selectedProductColor}</span>
                         <span>Size: {single.selectedProductSize}</span>
@@ -75,26 +64,25 @@ const MenuCart = ({ cartData, currency, deleteFromCart }) => {
           </ul>
           <div className="shopping-cart-total">
             <h4>
-              Total :{" "}
+              Tổng tiền :{" "}
               <span className="shop-total">
-                {currency.currencySymbol + cartTotalPrice.toFixed(2)}
+                {currency.currencyName
+                  ? cartTotalPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + currency.currencySymbol
+                  : currency.currencySymbol + cartTotalPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
               </span>
             </h4>
           </div>
           <div className="shopping-cart-btn btn-hover text-center">
             <Link className="default-btn" to={process.env.PUBLIC_URL + "/cart"}>
-              view cart
+              Xem giỏ hàng
             </Link>
-            <Link
-              className="default-btn"
-              to={process.env.PUBLIC_URL + "/checkout"}
-            >
-              checkout
+            <Link className="default-btn" to={process.env.PUBLIC_URL + "/checkout"}>
+              Kiểm tra
             </Link>
           </div>
         </Fragment>
       ) : (
-        <p className="text-center">No items added to cart</p>
+        <p className="text-center">Không có sản phẩm nào trong giỏ</p>
       )}
     </div>
   );
@@ -103,7 +91,7 @@ const MenuCart = ({ cartData, currency, deleteFromCart }) => {
 MenuCart.propTypes = {
   cartData: PropTypes.array,
   currency: PropTypes.object,
-  deleteFromCart: PropTypes.func
+  deleteFromCart: PropTypes.func,
 };
 
 export default MenuCart;

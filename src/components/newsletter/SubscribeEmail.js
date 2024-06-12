@@ -8,7 +8,7 @@ const CustomForm = ({ status, message, onValidated }) => {
     email &&
       email.value.indexOf("@") > -1 &&
       onValidated({
-        EMAIL: email.value
+        EMAIL: email.value,
       });
     email.value = "";
   };
@@ -19,7 +19,7 @@ const CustomForm = ({ status, message, onValidated }) => {
         <div>
           <input
             className="email"
-            ref={node => (email = node)}
+            ref={(node) => (email = node)}
             type="email"
             placeholder="Your Email Address"
             required
@@ -32,20 +32,12 @@ const CustomForm = ({ status, message, onValidated }) => {
         </div>
       </div>
 
-      {status === "sending" && (
-        <div style={{ color: "#3498db", fontSize: "12px" }}>sending...</div>
-      )}
+      {status === "sending" && <div style={{ color: "#3498db", fontSize: "12px" }}>sending...</div>}
       {status === "error" && (
-        <div
-          style={{ color: "#e74c3c", fontSize: "12px" }}
-          dangerouslySetInnerHTML={{ __html: message }}
-        />
+        <div style={{ color: "#e74c3c", fontSize: "12px" }} dangerouslySetInnerHTML={{ __html: message }} />
       )}
       {status === "success" && (
-        <div
-          style={{ color: "#2ecc71", fontSize: "12px" }}
-          dangerouslySetInnerHTML={{ __html: message }}
-        />
+        <div style={{ color: "#2ecc71", fontSize: "12px" }} dangerouslySetInnerHTML={{ __html: message }} />
       )}
     </div>
   );
@@ -57,11 +49,7 @@ const SubscribeEmail = ({ mailchimpUrl }) => {
       <MailchimpSubscribe
         url={mailchimpUrl}
         render={({ subscribe, status, message }) => (
-          <CustomForm
-            status={status}
-            message={message}
-            onValidated={formData => subscribe(formData)}
-          />
+          <CustomForm status={status} message={message} onValidated={(formData) => subscribe(formData)} />
         )}
       />
     </div>
@@ -69,7 +57,7 @@ const SubscribeEmail = ({ mailchimpUrl }) => {
 };
 
 SubscribeEmail.propTypes = {
-  mailchimpUrl: PropTypes.string
+  mailchimpUrl: PropTypes.string,
 };
 
 export default SubscribeEmail;

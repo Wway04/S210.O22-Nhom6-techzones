@@ -12,7 +12,7 @@ const ShopSize = ({ sizes, getSortParams }) => {
             <li>
               <div className="sidebar-widget-list-left">
                 <button
-                  onClick={e => {
+                  onClick={(e) => {
                     getSortParams("size", "");
                     setActiveSort(e);
                   }}
@@ -27,7 +27,7 @@ const ShopSize = ({ sizes, getSortParams }) => {
                   <div className="sidebar-widget-list-left">
                     <button
                       className="text-uppercase"
-                      onClick={e => {
+                      onClick={(e) => {
                         getSortParams("size", size);
                         setActiveSort(e);
                       }}
@@ -51,7 +51,7 @@ const ShopSize = ({ sizes, getSortParams }) => {
 
 ShopSize.propTypes = {
   getSortParams: PropTypes.func,
-  sizes: PropTypes.array
+  sizes: PropTypes.array,
 };
 
 export default ShopSize;

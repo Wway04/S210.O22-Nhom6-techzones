@@ -16,7 +16,7 @@ const BrandLogoOneSingle = ({ data, sliderClassName, spaceBottomClass }) => {
 BrandLogoOneSingle.propTypes = {
   data: PropTypes.object,
   sliderClassName: PropTypes.string,
-  spaceBottomClass: PropTypes.string
+  spaceBottomClass: PropTypes.string,
 };
 
 export default BrandLogoOneSingle;
